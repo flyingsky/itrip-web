@@ -1,6 +1,7 @@
-itrip-web
-=========
+## itrip-web
 
-TODO:
-1. research basic architecture, including AWS, S3, develop/deploy nodejs on EC2
-2. 
+
+## research
+
+1. basic architecture, including S3 
+2. develop/deploy nodejs on EC2
