@@ -34,7 +34,7 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 
-app.all('/trip[B|b]oard/:action', function(req, res) {
+app.all('/:service/:action', function(req, res, next) {
     var _resolveMethodName = function(methodName, obj) {
         for (var m in obj) {
             if (methodName && methodName.toLowerCase() == m.toLowerCase()) {
@@ -44,19 +44,16 @@ app.all('/trip[B|b]oard/:action', function(req, res) {
         return null;
     };
 
-    var serviceName = _resolveMethodName('tripboard', routes);
-    console.log(serviceName);
-
+    var serviceName = _resolveMethodName(req.params.service, routes);
     if (serviceName) {
         var actionName = _resolveMethodName(req.params.action, routes[serviceName]);
-        console.log(actionName);
         if (actionName) {
             routes[serviceName][actionName](req, res);
             return;
         }
     }
 
-//    throw new Error('Cannot find target page: ' + service + ', ' + action);
+    next();
 });
 
 app.listen(process.env.VCAP_APP_PORT || 3000, function(){
