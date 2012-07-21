@@ -88,7 +88,7 @@ exports.searchgallery = function(req, res) {
 };
 
 exports.upload = function(req, res) {
-    var uploadView = 'tripBoard/upload.jade';
+    var uploadView = 'tripboard/upload.jade';
 
     if (req.method == 'GET') {
         res.render(uploadView, {

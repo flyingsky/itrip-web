@@ -1,0 +1,16 @@
+<!DOCTYPE>
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+  body
+    include layout-nav
+
+    div(class="container")
+      block content
+      block footer
+        p © 2012 itrip
+
+    include layout-js
+    block bottom-js

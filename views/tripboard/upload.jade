@@ -1,7 +1,11 @@
-.login-form
+extends ../layout/layout
+
+block content
+
+  .login-form
     form(method="post", enctype="multipart/form-data")
       input(type="file", name="displayImage")
       input(type="submit", name="submit", value="Submit")
 
-if uploaded
+  if uploaded
     img(src=imageUrl)
