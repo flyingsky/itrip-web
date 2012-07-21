@@ -6,3 +6,5 @@
 exports.index = function(req, res){
   res.render('index', { title: 'iTrip' })
 };
+
+exports.tripBoard = require('./tripBoard');
