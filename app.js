@@ -32,7 +32,8 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', routes.index);
+app.get('/', routes.tripBoard.galleryPage);
+app.get('/api', routes.api);
 
 app.all('/:service/:action', function(req, res, next) {
     var _resolveMethodName = function(methodName, obj) {

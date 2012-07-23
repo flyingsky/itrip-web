@@ -1,0 +1,18 @@
+extends layout/layout
+
+block content
+  ul.apis
+    for api in apis
+      li
+        a(href="#{api.url}") #{api.name}
+
+block bottom-js
+  script
+    $(function () {
+      $('.apis a').click(function (event) {
+        var target = event.target,
+            url = target.href;
+        $.getJSON(url);
+        return false;
+      });
+    });
