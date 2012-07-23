@@ -3,30 +3,35 @@
  * Date: 7/21/12 11:26 AM
  */
 
-//var easyimg = require('node-easyimage');
-var path = require('path'),
+var easyimg = require('easyimage'),
+    path = require('path'),
     fs = require('fs');
 
 var imgRelativeDir = 'demo_images',
+    pageSize = 30,
     imgAbsoluteDir = path.join(process.pwd, 'public', imgRelativeDir);
 
-var thumbnails = [{"width":"192","height":"256","url":"demo_images/1.jpg"},{"width":"192","height":"192","url":"demo_images/10.jpg"},{"width":"192","height":"288","url":"demo_images/11.jpg"},{"width":"192","height":"127","url":"demo_images/12.jpg"},{"width":"192","height":"256","url":"demo_images/13.jpg"},{"width":"191","height":"287","url":"demo_images/14.jpg"},{"width":"191","height":"287","url":"demo_images/15.jpg"},{"width":"192","height":"122","url":"demo_images/16.jpg"},{"width":"192","height":"192","url":"demo_images/17.jpg"},{"width":"191","height":"258","url":"demo_images/18.jpg"},{"width":"192","height":"143","url":"demo_images/19.jpg"},{"width":"191","height":"255","url":"demo_images/2.jpg"},{"width":"192","height":"144","url":"demo_images/20.jpg"},{"width":"192","height":"144","url":"demo_images/21.jpg"},{"width":"192","height":"132","url":"demo_images/22.jpg"},{"width":"192","height":"288","url":"demo_images/23.jpg"},{"width":"192","height":"267","url":"demo_images/24.jpg"},{"width":"192","height":"143","url":"demo_images/25.jpg"},{"width":"192","height":"143","url":"demo_images/26.jpg"},{"width":"192","height":"134","url":"demo_images/27.jpg"},{"width":"192","height":"120","url":"demo_images/28.jpg"},{"width":"192","height":"288","url":"demo_images/29.jpg"},{"width":"192","height":"192","url":"demo_images/3.jpg"},{"width":"192","height":"143","url":"demo_images/30.jpg"},{"width":"192","height":"192","url":"demo_images/31.jpg"},{"width":"192","height":"192","url":"demo_images/32.jpg"},{"width":"192","height":"288","url":"demo_images/33.jpg"},{"width":"192","height":"127","url":"demo_images/34.jpg"},{"width":"192","height":"192","url":"demo_images/35.jpg"},{"width":"191","height":"246","url":"demo_images/36.jpg"},{"width":"192","height":"384","url":"demo_images/37.jpg"},{"width":"192","height":"256","url":"demo_images/38.jpg"},{"width":"192","height":"256","url":"demo_images/39.jpg"},{"width":"191","height":"288","url":"demo_images/4.jpg"},{"width":"191","height":"277","url":"demo_images/40.jpg"},{"width":"192","height":"257","url":"demo_images/41.jpg"},{"width":"191","height":"287","url":"demo_images/42.jpg"},{"width":"48","height":"48","url":"demo_images/43.jpg"},{"width":"48","height":"48","url":"demo_images/44.jpeg"},{"width":"48","height":"48","url":"demo_images/45.jpg"},{"width":"48","height":"48","url":"demo_images/46.jpg"},{"width":"48","height":"48","url":"demo_images/47.jpg"},{"width":"48","height":"48","url":"demo_images/48.jpg"},{"width":"48","height":"48","url":"demo_images/49.jpg"},{"width":"192","height":"143","url":"demo_images/5.jpg"},{"width":"192","height":"144","url":"demo_images/6.jpg"},{"width":"192","height":"234","url":"demo_images/7.jpg"},{"width":"192","height":"191","url":"demo_images/8.jpg"},{"width":"191","height":"219","url":"demo_images/9.jpg"}];
+var thumbnails;//[{"width":"192","height":"256","url":"demo_images/1.jpg"},{"width":"192","height":"192","url":"demo_images/10.jpg"},{"width":"192","height":"288","url":"demo_images/11.jpg"},{"width":"192","height":"127","url":"demo_images/12.jpg"},{"width":"192","height":"256","url":"demo_images/13.jpg"},{"width":"191","height":"287","url":"demo_images/14.jpg"},{"width":"191","height":"287","url":"demo_images/15.jpg"},{"width":"192","height":"122","url":"demo_images/16.jpg"},{"width":"192","height":"192","url":"demo_images/17.jpg"},{"width":"191","height":"258","url":"demo_images/18.jpg"},{"width":"192","height":"143","url":"demo_images/19.jpg"},{"width":"191","height":"255","url":"demo_images/2.jpg"},{"width":"192","height":"144","url":"demo_images/20.jpg"},{"width":"192","height":"144","url":"demo_images/21.jpg"},{"width":"192","height":"132","url":"demo_images/22.jpg"},{"width":"192","height":"288","url":"demo_images/23.jpg"},{"width":"192","height":"267","url":"demo_images/24.jpg"},{"width":"192","height":"143","url":"demo_images/25.jpg"},{"width":"192","height":"143","url":"demo_images/26.jpg"},{"width":"192","height":"134","url":"demo_images/27.jpg"},{"width":"192","height":"120","url":"demo_images/28.jpg"},{"width":"192","height":"288","url":"demo_images/29.jpg"},{"width":"192","height":"192","url":"demo_images/3.jpg"},{"width":"192","height":"143","url":"demo_images/30.jpg"},{"width":"192","height":"192","url":"demo_images/31.jpg"},{"width":"192","height":"192","url":"demo_images/32.jpg"},{"width":"192","height":"288","url":"demo_images/33.jpg"},{"width":"192","height":"127","url":"demo_images/34.jpg"},{"width":"192","height":"192","url":"demo_images/35.jpg"},{"width":"191","height":"246","url":"demo_images/36.jpg"},{"width":"192","height":"384","url":"demo_images/37.jpg"},{"width":"192","height":"256","url":"demo_images/38.jpg"},{"width":"192","height":"256","url":"demo_images/39.jpg"},{"width":"191","height":"288","url":"demo_images/4.jpg"},{"width":"191","height":"277","url":"demo_images/40.jpg"},{"width":"192","height":"257","url":"demo_images/41.jpg"},{"width":"191","height":"287","url":"demo_images/42.jpg"},{"width":"48","height":"48","url":"demo_images/43.jpg"},{"width":"48","height":"48","url":"demo_images/44.jpeg"},{"width":"48","height":"48","url":"demo_images/45.jpg"},{"width":"48","height":"48","url":"demo_images/46.jpg"},{"width":"48","height":"48","url":"demo_images/47.jpg"},{"width":"48","height":"48","url":"demo_images/48.jpg"},{"width":"48","height":"48","url":"demo_images/49.jpg"},{"width":"192","height":"143","url":"demo_images/5.jpg"},{"width":"192","height":"144","url":"demo_images/6.jpg"},{"width":"192","height":"234","url":"demo_images/7.jpg"},{"width":"192","height":"191","url":"demo_images/8.jpg"},{"width":"191","height":"219","url":"demo_images/9.jpg"}];
 
-function fetchImages (pageIndex) {
+function fetchImages (pageIndex, callback) {
     var pageSize = 30,
         index = pageIndex ? pageIndex : 1,
         itemStart = (index - 1) * pageSize, 
-        itemEnd = itemStart + pageSize,
-        datas = thumbnails ? thumbnails : readImages();
+        itemEnd = itemStart + pageSize;
 
-    return datas ? datas.slice(itemStart, itemEnd) : [];
-
+    if (thumbnails) {
+        callback(thumbnails ? thumbnails.slice(itemStart, itemEnd) : []);
+    } else {
+        readImages(function (xs) {
+            callback(xs ? xs.slice(itemStart, itemEnd) : []);
+        });
+    }
 }
 
 /**
  * FIXME: how to be asyn??
  */
-function readImages () {
+function readImages (next) {
     fs.readdir(imgAbsoluteDir, function(err, imgs) {
         if (err) {
             throw err;
@@ -41,13 +46,13 @@ function readImages () {
                     console.log('error in identify for: ' + imgPath);
                     throw err;
                 }
-
                 var thumbnail = {
                     width: features.width,
                     height: features.height,
                     //geometry: features.geometry,
                     url: relativePath
                 };
+
                 thumbnails[index] = thumbnail;
 
                 // Why this loop??
@@ -56,23 +61,28 @@ function readImages () {
                         return;
                     }
                 }
+                // TODO: thumbnails is variable outside async callback,
+                // how this variable has been filled?
+                next && next(thumbnails);
             });
         });
-        return thumbnails;
+        
     });
 }
 
-exports.galleryPage = function(req, res) {
+exports.galleryGet = function(req, res) {
     var pageIndex = parseInt(req.param('page'));
-    //pageIndex = isNaN(pageIndex) ? 0 : pageIndex;
-    res.render('tripboard/gallery', { images: fetchImages(pageIndex)
-                                    , title: 'Index' });
+    fetchImages(pageIndex, function (datas) {
+        res.render('tripboard/gallery', { images: datas, title: 'Index' });
+    })
 }
 
-exports.gallery = function(req, res) {
+exports.galleryApi = function(req, res) {
     var pageIndex = parseInt(req.param('page'));
-    //pageIndex = isNaN(pageIndex) ? 0 : pageIndex;
-    res.send(fetchImages(pageIndex));
+    
+    fetchImages(pageIndex, function (datas) {
+        res.send(datas);
+    })
 
     // var pageSize, itemStart, itemEnd;
 
@@ -135,7 +145,7 @@ exports.gallery = function(req, res) {
     // }
 };
 
-exports.searchgallery = function(req, res) {
+exports.searchGalleryApi = function(req, res) {
     if (thumbnails && thumbnails.length <= 0) {
         res.send([]);
     }
@@ -147,7 +157,7 @@ exports.searchgallery = function(req, res) {
     res.send(thumbnails.slice(itemStart, itemEnd));
 };
 
-exports.upload = function(req, res) {
+exports.uploadApi = function(req, res) {
     var uploadView = 'tripboard/upload.jade';
 
     if (req.method == 'GET') {
