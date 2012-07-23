@@ -94,6 +94,7 @@ exports.tripRecord = function(req, res) {
         title:'Shanghai Trip',
         address:'Shanghai',
         authorId:'llmfei@gmail.com',
+        authorPhotoUrl: 'demo_images/1.jpg',
         authorName:'Ramon Liu',
         start:new Date(),
         end:new Date(),
