@@ -3,17 +3,17 @@ var fs = require('fs');
 /*
  * GET home page.
  */
-
-var gallery = require('./gallery')
+var objUtil = require("../lib/object-utils"),
+    gallery = require('./gallery');
 
 module.exports = function (app) {
 
-    app.get('/', gallery.indexGet);
-
+    app.get('/', gallery.index);
+    app.get('/index', gallery.index);
     app.get('/api', api);
-    app.get('/api/gallery', gallery.indexApi);
-    app.get('/api/gallery/search', gallery.searchApi);
-    app.all('/api/gallery/upload', gallery.uploadApi);
+
+    fs.readdirSync(__dirname).filter(isFileToBeAutoLoad).forEach(addRoutes.bind({}, app, ''));
+    fs.readdirSync(__dirname + '/api').forEach(addRoutes.bind({}, app, '/api'));
 
 };
 
@@ -25,25 +25,33 @@ function index (req, res){
  * API Home page listing all apis
  */
 function api (req, res) {
-    var apis = [ { name: "Gallery", url: '/tripboard/gallery'}, 
-                 { name: "Upload", url: '/tripboard/upload'}, 
-                 { name: "SearchGallery", url: '/tripboard/searchgallery'} ];
+    //FIXME: make me fleible.
+    var apis = [ { name: "Gallery", url: '/gallery/index'}, 
+                 { name: "Upload", url: '/gallery/upload'}, 
+                 { name: "SearchGallery", url: '/gallery/search'},
+                 { name: "tripRecord", url: '/gallery/triprecord'} ];
 
-    res.render('api', { apis: apis
-                      , title: 'apis' });
+    res.render('api', { apis: apis, title: 'apis' });
 }
 
 
 /**
  * Auto-load all route files under routes dir.
  */
-// fs.readdirSync(__dirname).forEach(function(filename){
-//     if (/\.js$/.test(filename)) {
-//         var name = filename.substr(0, filename.lastIndexOf('.'));
-//         if (name != 'index') {
-//             exports.__defineGetter__(name, function(){
-//                 return require('./' + name);
-//             });
-//         }
-//     }
-// });
+var notAutoLoadFiles = ['index.js'];
+
+function isFileToBeAutoLoad (filename) {
+   return /\.js$/.test(filename) && notAutoLoadFiles.indexOf(filename) === -1;
+}
+
+function addRoutes (app, prefixInput, filename) {
+  var prefix = prefixInput ? prefixInput : '',
+      name = filename.substr(0, filename.lastIndexOf('.'))
+      exps = require(['.', prefix, name].join('/'));
+
+  // TODO: separate GET/POST/ALL
+  objUtil.forEach(exps, function (key, value) {
+     console.log([prefix, name.toLowerCase(), key.toLowerCase()].join('/'));
+     app.all([prefix, name.toLowerCase(), key.toLowerCase()].join('/'), value);
+  });
+}

@@ -2,4 +2,8 @@
 p:
 	supervisor -w .,routes/,controllers/,models/ app.js
 
-.PHONY: p
+### npm install -g mocha
+test:
+	mocha
+
+.PHONY: p test

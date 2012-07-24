@@ -31,33 +31,7 @@ app.configure('production', function(){
 });
 
 // Routes
-
 routes(app);
-
-// app.get('/', routes.tripBoard.galleryPage);
-// app.get('/api', routes.api);
-
-// app.all('/:service/:action', function(req, res, next) {
-//     var _resolveMethodName = function(methodName, obj) {
-//         for (var m in obj) {
-//             if (methodName && methodName.toLowerCase() == m.toLowerCase()) {
-//                 return m;
-//             }
-//         }
-//         return null;
-//     };
-
-//     var serviceName = _resolveMethodName(req.params.service, routes);
-//     if (serviceName) {
-//         var actionName = _resolveMethodName(req.params.action, routes[serviceName]);
-//         if (actionName) {
-//             routes[serviceName][actionName](req, res);
-//             return;
-//         }
-//     }
-
-//     next();
-// });
 
 app.listen(process.env.VCAP_APP_PORT || 3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
