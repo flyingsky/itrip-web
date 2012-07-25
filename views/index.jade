@@ -2,9 +2,7 @@ extends layout/layout
 
 block content
   div.imagescontainer
-    for img in images
-      div.pin
-        img(src='/#{img.url}')
+    include tripboard/gallery
   #LoadingPins
     a(href="#") Load More
 
