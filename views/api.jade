@@ -2,6 +2,8 @@ extends layout/layout
 
 block content
   .apis
+    h2='Input your json paramter here, then click the service link. For example you can input {page:1, pageSize:2} for fetchImages'
+    textarea.jsonparam(style='width: 80%', rows='10')
     for apiGroup, apiGroupName in apis
       .apiGroup
         h2= apiGroupName
@@ -20,7 +22,20 @@ block bottom-js
         var target = event.target,
             url = target.href;
         event.preventDefault();
-        $.getJSON(url, function(data){
+
+        var param = null, paramStr = $('.jsonparam').val();
+
+        if (paramStr) {
+           try {
+               //FIXME: any better idea, JSON.parse or $.parseJSON too weak
+               param = eval('(' + paramStr + ')');
+           } catch(error) {
+               alert('You json parameter is not valid');
+               return;
+           }
+        }
+
+        $.getJSON(url, param, function(data){
             var parent = $(target).parent();
             var apiresult = parent.children('.apiresult');
             if (!apiresult || (apiresult.hasOwnProperty('length') && apiresult.length == 0)) {
