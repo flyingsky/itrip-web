@@ -1,11 +1,31 @@
+.PHONY: p test sass-dev
 
+###
+### apt-get install ruby
+### gem install sass compass
+### 
+COMPASS=compass
+UI-DIR=ui
+
+###
+### Test
+###
 MOCHA=./node_modules/mocha/bin/mocha
 
 p:
 	supervisor -w .,routes/,services/,models/ app.js
 
+###
 ### npm install -g mocha
+###
 test:
 	$(MOCHA)
 
-.PHONY: p test
+sass-dev:
+	$(COMPASS) watch $(UI_DIR)
+
+
+###
+### TODO: production build
+###
+
