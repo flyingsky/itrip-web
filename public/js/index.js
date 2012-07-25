@@ -25,8 +25,12 @@
          },
          addNew: function (data) {
             var that = this, 
-                $boxes = $(data);
-           $(that.container).prepend($boxes).masonry( 'appended', $boxes, true );
+                $boxes = $(data),
+                $container = $(that.container);
+            $container.prepend($boxes);
+            $container.imagesLoaded(function() {
+               $container.masonry('appended', $boxes, true);
+            });
          }
       }
    });
