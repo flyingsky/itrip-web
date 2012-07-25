@@ -1,10 +1,17 @@
 extends layout/layout
 
 block content
-  ul.apis
-    for api in apis
-      li
-        a(href="#{api.url}") #{api.name}
+  .apis
+    for apiGroup, apiGroupName in apis
+      .apiGroup
+        h2= apiGroupName
+        ul.apis
+          for apiUrl, apiName in apiGroup
+            li
+              a(href="#{apiUrl}") #{apiName}
+
+
+
 
 block bottom-js
   script
@@ -12,7 +19,16 @@ block bottom-js
       $('.apis a').click(function (event) {
         var target = event.target,
             url = target.href;
-        $.getJSON(url);
+        event.preventDefault();
+        $.getJSON(url, function(data){
+            var parent = $(target).parent();
+            var apiresult = parent.children('.apiresult');
+            if (!apiresult || (apiresult.hasOwnProperty('length') && apiresult.length == 0)) {
+                parent.append("<div class='apiresult' style='border:1px dashed black; margin-top: 2px; padding: 2px'></div>");
+                apiresult = parent.children('.apiresult')[0];
+            }
+            $(apiresult).html(JSON.stringify(data));
+        });
         return false;
       });
     });
