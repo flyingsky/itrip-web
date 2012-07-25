@@ -18,7 +18,7 @@ module.exports = function (app) {
 };
 
 function index (req, res){
-  res.render('index', { title: 'iTrip' })
+  res.render('index', { title: 'iTrip' });
 };
 
 /**
@@ -46,7 +46,7 @@ function isFileToBeAutoLoad (filename) {
 
 function addRoutes (app, prefixInput, filename) {
   var prefix = prefixInput ? prefixInput : '',
-      name = filename.substr(0, filename.lastIndexOf('.'))
+      name = filename.substr(0, filename.lastIndexOf('.')),
       exps = require(['.', prefix, name].join('/'));
 
   // TODO: separate GET/POST/ALL

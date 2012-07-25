@@ -5,7 +5,7 @@
 
 // var easyimg = require('easyimage');
 
-var LARGE_PAGE_SIZE = 30
+var LARGE_PAGE_SIZE = 30,
     SMALL_PAGE_SIZE = 10;
 
 
@@ -28,7 +28,7 @@ exports.fetchImages = function (req, callback, pageSizeInput) {
         itemEnd = itemStart + pageSize;
 
     if (thumbnails) {
-        callback(thumbnails ? thumbnails.slice(itemStart, itemEnd) : []);
+        callback(thumbnails.slice(itemStart, itemEnd));
     } else {
         readImages(function (xs) {
             callback(xs ? xs.slice(itemStart, itemEnd) : []);
