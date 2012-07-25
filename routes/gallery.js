@@ -6,7 +6,7 @@ var gallerySrv = require('../services/gallery');
  */  
 exports.index = function (req, res) {
     gallerySrv.fetchImages(req, function (datas) {
-        res.render('tripboard/gallery', { images: datas, title: 'Index' });
+        res.render('index', { images: datas, title: 'Index' });
     });
 }
 

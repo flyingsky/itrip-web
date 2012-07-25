@@ -1,5 +1,9 @@
 extends layout/layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  for img in images
+    div.pin
+      img(src='/#{img.url}')
+
+block bottom-js
+  script(src='/js/index.js')
