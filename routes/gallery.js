@@ -7,10 +7,8 @@ var gallerySrv = require('../services/gallery'),
 exports.index = function (req, res) {
    var pageIndex = util.parseInt(req.param('page'), 0);
    var pageSize = util.parseInt(req.param('pageSize'), 0);
-   gallerySrv.fetchImages(pageIndex, pageSize, function (datas) {
+   gallerySrv.fetchImages(function (datas) {
       var jade = pageIndex >= 2 ? 'tripboard/gallery' : 'index';
-
       res.render(jade, { images:datas, title:'Index' });
-
-   }, 12);
+   }, pageIndex, pageSize, 12);
 };

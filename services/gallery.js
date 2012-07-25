@@ -3,6 +3,24 @@
  * Date: 7/21/12 11:26 AM
  */
 
+   /*
+    * 1. By default, we think all exports functions are public to client, in another word, any client can invoke
+    * these functions and get JSON response result.
+    *
+    * 2. If some function is hidden for client, but you want to exports, please exports it as one property of an
+    * exported object. For convention we use internal object. For example:
+    *
+    * exports.internal = {};
+    * exports.internal.foo = function(){...};
+    * exports.internal.bar = function(){...};
+    *
+    * 3. For any public service, we require the function signature satisfies below convention:
+    * 3.1 If your function is asyn, please make sure first parameter is callback function with parameter name 'callback' and invoke callback when your execution is over, such as
+    * function fetchImages.
+    * 3.2 other parameters should have the same name in req.param. You are responsible to check the parameter data type, number or string.
+    * By default we pass parameter as string from automatically service wrapper.
+    */
+
 // var easyimg = require('easyimage');
 
 var LARGE_PAGE_SIZE = 30,
@@ -20,9 +38,9 @@ var thumbnails = [{"width":"192","height":"256","url":"demo_images/1.jpg"},{"wid
 exports.SMALL_PAGE_SIZE = SMALL_PAGE_SIZE;
 exports.LARGE_PAGE_SIZE = LARGE_PAGE_SIZE;
 
-exports.fetchImages = function (pageIndex, pageSize, callback) {
+exports.fetchImages = function (callback, page, pageSize) {
     var pageSize = pageSize || LARGE_PAGE_SIZE,
-        index = pageIndex ? pageIndex : 1,
+        index = page ? page : 1,
         itemStart = (index - 1) * pageSize, 
         itemEnd = itemStart + pageSize;
 
@@ -77,19 +95,19 @@ function readImages (next) {
     });
 }
 
-exports.searchGallery = function(req, res) {
+exports.searchGallery = function(keyword) {
     if (!thumbnails || thumbnails.length <= 0) {
-        res.send("no images found");
+        return "no images found";
     }
 
     var len = thumbnails.length;
     var itemStart = utils.randomInt(len);
     var itemEnd = itemStart + utils.randomInt(len-itemStart);
     console.log('searchgallery: ' + itemStart + ', ' + itemEnd);
-    res.send(thumbnails.slice(itemStart, itemEnd));
+    return thumbnails.slice(itemStart, itemEnd);
 };
 
-exports.tripRecord = function(req, res) {
+exports.tripRecord = function(tripId) {
     var tripRecord = {
         id: 'trip_record_id',
         title:'Shanghai Trip',
@@ -120,7 +138,7 @@ exports.tripRecord = function(req, res) {
         tripRecord.dailyRecords.push(dailyRecord);
     }
 
-    res.send(tripRecord);
+    return tripRecord;
 };
 
 exports.upload = function(req, res) {
