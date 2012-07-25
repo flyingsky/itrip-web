@@ -1,9 +1,11 @@
 
+MOCHA=./node_modules/mocha/bin/mocha
+
 p:
-	supervisor -w .,routes/,controllers/,models/ app.js
+	supervisor -w .,routes/,services/,models/ app.js
 
 ### npm install -g mocha
 test:
-	mocha
+	$(MOCHA)
 
 .PHONY: p test

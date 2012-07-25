@@ -11,9 +11,9 @@ describe('Object each', function(){
           keys.push(key);
           values.push(value);
        });
-       assert.equal(0, keys.indexOf("name"));
-       assert.equal(1, keys.indexOf("location"));
-       assert.equal(0, values.indexOf("simon"));
-       assert.equal(1, values.indexOf("SH"));
+	keys.indexOf("name").should.equal(0);
+	keys.indexOf("location").should.equal(1);
+	values.indexOf("simon").should.equal(0);
+	values.indexOf("SH").should.equal(1);
     });
 });
