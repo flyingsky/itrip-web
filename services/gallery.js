@@ -20,9 +20,8 @@ var thumbnails = [{"width":"192","height":"256","url":"demo_images/1.jpg"},{"wid
 exports.SMALL_PAGE_SIZE = SMALL_PAGE_SIZE;
 exports.LARGE_PAGE_SIZE = LARGE_PAGE_SIZE;
 
-exports.fetchImages = function (req, callback, pageSizeInput) {
-    var pageSize = pageSizeInput ? pageSizeInput : LARGE_PAGE_SIZE,
-        pageIndex = getPageIndexParam(req),
+exports.fetchImages = function (pageIndex, pageSize, callback) {
+    var pageSize = pageSize || LARGE_PAGE_SIZE,
         index = pageIndex ? pageIndex : 1,
         itemStart = (index - 1) * pageSize, 
         itemEnd = itemStart + pageSize;
@@ -77,14 +76,6 @@ function readImages (next) {
         
     });
 }
-
-/**
- * Query parameter of Page Index
- */
-function getPageIndexParam (req) {
-    return parseInt(req.param('page'));
-}
-exports.getPageIndexParam = getPageIndexParam;
 
 exports.searchGallery = function(req, res) {
     if (!thumbnails || thumbnails.length <= 0) {

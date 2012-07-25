@@ -15,8 +15,10 @@ module.exports = function (app) {
    app.get('/index', gallery.index);
    app.get('/api', api);
 
-   fs.readdirSync(__dirname).filter(isFileToBeAutoLoad).forEach(addRoutes.bind({}, app, ''));
-   fs.readdirSync(process.cwd() + '/services').forEach(addRoutes.bind({findAPI:true}, app, '/api'));
+   fs.readdirSync(__dirname).filter(isFileToBeAutoLoad).forEach(addRoutes.bind({}, app, __dirname, ''));
+
+   var serviceDir = process.cwd() + '/services';
+   fs.readdirSync(serviceDir).forEach(addRoutes.bind({findAPI:true}, app, serviceDir, '/api'));
 
 };
 
@@ -43,11 +45,11 @@ function isFileToBeAutoLoad(filename) {
    return /\.js$/.test(filename) && notAutoLoadFiles.indexOf(filename) === -1;
 }
 
-function addRoutes(app, prefixInput, filename) {
+function addRoutes(app, dir, urlPrefix, filename) {
    var self = this,
-      prefix = prefixInput ? prefixInput : '',
+      prefix = urlPrefix || '',
       name = filename.substr(0, filename.lastIndexOf('.')),
-      exps = require(['.', prefix, name].join('/'));
+      exps = require([dir, name].join('/'));
 
    // TODO: separate GET/POST/ALL
    objUtil.forEach(exps, function (key, value) {

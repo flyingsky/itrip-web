@@ -1,15 +1,16 @@
-
-var gallerySrv = require('../services/gallery');
+var gallerySrv = require('../services/gallery'),
+   util = require('../lib/utils');
 
 /**
  * Fetch images in terms of page.
- */  
+ */
 exports.index = function (req, res) {
-    gallerySrv.fetchImages(req, function (datas) {
-        var page = gallerySrv.getPageIndexParam(req),
-            jade = parseInt(page) >= 2 ? 'tripboard/gallery' : 'index';
+   var pageIndex = util.parseInt(req.param('page'), 0);
+   var pageSize = util.parseInt(req.param('pageSize'), 0);
+   gallerySrv.fetchImages(pageIndex, pageSize, function (datas) {
+      var jade = pageIndex >= 2 ? 'tripboard/gallery' : 'index';
 
-        res.render(jade, { images: datas, title: 'Index' });
+      res.render(jade, { images:datas, title:'Index' });
 
-    }, 12);
+   }, 12);
 };
