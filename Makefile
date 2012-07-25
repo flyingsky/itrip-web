@@ -5,7 +5,7 @@
 ### gem install sass compass
 ### 
 COMPASS=compass
-UI-DIR=ui
+UI_DIR=ui
 
 ###
 ### Test

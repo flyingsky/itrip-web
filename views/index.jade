@@ -1,9 +1,12 @@
 extends layout/layout
 
 block content
-  for img in images
-    div.pin
-      img(src='/#{img.url}')
+  div.imagescontainer
+    for img in images
+      div.pin
+        img(src='/#{img.url}')
+  #LoadingPins
+    a(href="#") Load More
 
 block bottom-js
   script(src='/js/index.js')

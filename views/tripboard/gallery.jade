@@ -1,6 +1,3 @@
-extends ../layout/layout
-
-block content
-  for img in images
-    div.pin
-      img(src='/#{img.url}')
+for img in images
+  div.pin
+    img(src='/#{img.url}')

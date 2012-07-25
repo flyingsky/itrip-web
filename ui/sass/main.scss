@@ -4,18 +4,31 @@
 @import "variable.scss";
 
 body {
-    padding: 30px;
+    padding: 0 30px 30px;
     font: $default-font;
     background: #F7F5F5 url(../imgs/bg.jpg);
 }
 
-a {
-    color: #00B7FF;
+nav {
+    height: 50px;
+    padding: 5px 0;
+    > a {
+        margin-left: 200px;
+    }
+    ul {
+        margin-right: 100px;
+        li {
+            display: inline;
+            a {
+                light-height: 13px;
+                padding: 10px;
+            }
+        }
+    }
 }
 
-
-footer {
-    clear: both;
+a {
+    color: #00B7FF;
 }
 
 .pin {
@@ -23,4 +36,24 @@ footer {
     background-color: white;
     margin: 10px;
     float: left;
+}
+
+#loadingpins {
+    text-align: center;
+}
+
+footer {
+    margin-top: 20px;
+}
+
+
+/** ============ TODO: if compass has already definde?? */
+.clear {
+  clear: both;
+}
+.right {
+  float: right;
+}
+.left {
+  float: left;
 }

@@ -26,10 +26,11 @@ function index (req, res){
  */
 function api (req, res) {
     //FIXME: make me fleible.
-    var apis = [ { name: "Gallery", url: '/gallery/index'}, 
-                 { name: "Upload", url: '/gallery/upload'}, 
-                 { name: "SearchGallery", url: '/gallery/search'},
-                 { name: "tripRecord", url: '/gallery/triprecord'} ];
+    var apis = [ { name: "Gallery", url: '/api/gallery/index'},
+                 { name: "GalleryPage2", url: '/gallery/index?page=2'}, 
+                 { name: "Upload", url: '/api/gallery/upload'}, 
+                 { name: "SearchGallery", url: '/api/gallery/search'},
+                 { name: "tripRecord", url: '/api/gallery/triprecord'} ];
 
     res.render('api', { apis: apis, title: 'apis' });
 }

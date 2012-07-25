@@ -84,6 +84,7 @@ function readImages (next) {
 function getPageIndexParam (req) {
     return parseInt(req.param('page'));
 }
+exports.getPageIndexParam = getPageIndexParam;
 
 exports.searchGallery = function(req, res) {
     if (!thumbnails || thumbnails.length <= 0) {

@@ -4,7 +4,7 @@ block content
   ul.apis
     for api in apis
       li
-        a(href="/api#{api.url}") #{api.name}
+        a(href="#{api.url}") #{api.name}
 
 block bottom-js
   script
