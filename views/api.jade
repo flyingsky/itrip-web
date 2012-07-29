@@ -1,10 +1,19 @@
 extends layout/layout
 
 block content
-  ul.apis
-    for api in apis
-      li
-        a(href="#{api.url}") #{api.name}
+  .apis
+    h2='Input your json paramter here, then click the service link. For example you can input {page:1, pageSize:2} for fetchImages'
+    textarea.jsonparam(style='width: 80%', rows='10')
+    for apiGroup, apiGroupName in apis
+      .apiGroup
+        h2= apiGroupName
+        ul.apis
+          for apiUrl, apiName in apiGroup
+            li
+              a(href="#{apiUrl}") #{apiName}
+
+
+
 
 block bottom-js
   script
@@ -12,7 +21,29 @@ block bottom-js
       $('.apis a').click(function (event) {
         var target = event.target,
             url = target.href;
-        $.getJSON(url);
+        event.preventDefault();
+
+        var param = null, paramStr = $('.jsonparam').val();
+
+        if (paramStr) {
+           try {
+               //FIXME: any better idea, JSON.parse or $.parseJSON too weak
+               param = eval('(' + paramStr + ')');
+           } catch(error) {
+               alert('You json parameter is not valid');
+               return;
+           }
+        }
+
+        $.getJSON(url, param, function(data){
+            var parent = $(target).parent();
+            var apiresult = parent.children('.apiresult');
+            if (!apiresult || (apiresult.hasOwnProperty('length') && apiresult.length == 0)) {
+                parent.append("<div class='apiresult' style='border:1px dashed black; margin-top: 2px; padding: 2px'></div>");
+                apiresult = parent.children('.apiresult')[0];
+            }
+            $(apiresult).html(JSON.stringify(data));
+        });
         return false;
       });
     });
