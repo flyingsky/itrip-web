@@ -131,3 +131,8 @@ footer {
 .left {
   float: left;
 }
+
+/* line 60, ../../ui/sass/main.scss */
+.hide {
+  display: none;
+}
