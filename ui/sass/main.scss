@@ -9,26 +9,46 @@ body {
     background: #F7F5F5 url(../imgs/bg.jpg);
 }
 
-nav {
+#header {
     height: 50px;
-    padding: 5px 0;
+    margin: auto;
+    width: 950px;
+    background-color: #FAF7F7;
+    position: fixed;
     > a {
-        margin-left: 200px;
     }
-    ul {
-        margin-right: 100px;
-        li {
-            display: inline;
-            a {
-                light-height: 13px;
-                padding: 10px;
+    nav {
+        position: relative;
+        float: right;
+        ul {
+            li {
+                display: inline;
+                a {
+                    light-height: 13px;
+                    padding: 10px;
+                }
             }
         }
     }
 }
 
+.brand {
+    float: left;
+    display: block;
+    padding: 8px 20px 12px;
+    margin-left: -20px;
+    font-size: 20px;
+    font-weight: 200;
+    line-height: 1;
+}
+
 a {
     color: #00B7FF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 .pin {

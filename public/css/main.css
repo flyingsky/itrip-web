@@ -71,34 +71,51 @@ body {
 }
 
 /* line 12, ../../ui/sass/main.scss */
-nav {
+#header {
   height: 50px;
-  padding: 5px 0;
-}
-/* line 15, ../../ui/sass/main.scss */
-nav > a {
-  margin-left: 200px;
-}
-/* line 18, ../../ui/sass/main.scss */
-nav ul {
-  margin-right: 100px;
+  margin: auto;
+  width: 950px;
+  background-color: #FAF7F7;
+  position: fixed;
 }
 /* line 20, ../../ui/sass/main.scss */
-nav ul li {
+#header nav {
+  position: relative;
+  float: right;
+}
+/* line 24, ../../ui/sass/main.scss */
+#header nav ul li {
   display: inline;
 }
-/* line 22, ../../ui/sass/main.scss */
-nav ul li a {
+/* line 26, ../../ui/sass/main.scss */
+#header nav ul li a {
   light-height: 13px;
   padding: 10px;
 }
 
-/* line 30, ../../ui/sass/main.scss */
-a {
-  color: #00B7FF;
+/* line 35, ../../ui/sass/main.scss */
+.brand {
+  float: left;
+  display: block;
+  padding: 8px 20px 12px;
+  margin-left: -20px;
+  font-size: 20px;
+  font-weight: 200;
+  line-height: 1;
 }
 
-/* line 34, ../../ui/sass/main.scss */
+/* line 45, ../../ui/sass/main.scss */
+a {
+  color: #00B7FF;
+  text-decoration: none;
+}
+
+/* line 50, ../../ui/sass/main.scss */
+a:hover {
+  text-decoration: underline;
+}
+
+/* line 54, ../../ui/sass/main.scss */
 .pin {
   padding: 20px 20px 0 20px;
   background-color: white;
@@ -106,33 +123,33 @@ a {
   float: left;
 }
 
-/* line 41, ../../ui/sass/main.scss */
+/* line 61, ../../ui/sass/main.scss */
 #loadingpins {
   text-align: center;
 }
 
-/* line 45, ../../ui/sass/main.scss */
+/* line 65, ../../ui/sass/main.scss */
 footer {
   margin-top: 20px;
 }
 
 /** ============ TODO: if compass has already definde?? */
-/* line 51, ../../ui/sass/main.scss */
+/* line 71, ../../ui/sass/main.scss */
 .clear {
   clear: both;
 }
 
-/* line 54, ../../ui/sass/main.scss */
+/* line 74, ../../ui/sass/main.scss */
 .right {
   float: right;
 }
 
-/* line 57, ../../ui/sass/main.scss */
+/* line 77, ../../ui/sass/main.scss */
 .left {
   float: left;
 }
 
-/* line 60, ../../ui/sass/main.scss */
+/* line 80, ../../ui/sass/main.scss */
 .hide {
   display: none;
 }
